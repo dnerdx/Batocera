@@ -4,14 +4,17 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    container:
-      image: batocera/buildroot-bcm2835:latest
+    runs-on: ubuntu-22.04
     steps:
     - name: Baixar o código do repositório
       uses: actions/checkout@v4
 
-    - name: Configurar e Compilar Kernel
+    - name: Instalar dependências completas do Buildroot
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential sed make binutils patch gzip bzip2 perl tar cpio unzip rsync file bc wget libncurses5-dev libssl-dev cvs git mercurial subversion bash python3-dev syslinux-utils
+
+    - name: Configurar e Compilar Batocera
       run: |
         make batocera-x86_64_defconfig
         make linux-rebuild
