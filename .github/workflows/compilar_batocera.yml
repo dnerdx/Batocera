@@ -6,8 +6,10 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-    - name: Baixar o código do repositório
+    - name: Baixar o código do repositório com submódulos
       uses: actions/checkout@v4
+      with:
+        submodules: 'recursive' # Isso garante que o Buildroot e as dependências sejam baixados!
 
     - name: Instalar dependências completas do Buildroot
       run: |
