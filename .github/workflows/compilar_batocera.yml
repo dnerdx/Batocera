@@ -1,0 +1,21 @@
+name: Compilar Batocera Customizado
+on:
+  workflow_dispatch: # Isso ativa o botão manual cinza!
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Baixar o código do repositório
+      uses: actions/checkout@v4
+
+    - name: Instalar dependências necessárias
+      run: |
+        sudo apt update
+        sudo apt install -y build-essential git ccache bc libssl-dev bison flex python3 openjdk-17-jdk
+
+    - name: Configurar e Compilar
+      run: |
+        make batocera-x86_64_defconfig
+        make linux-rebuild
+        make
